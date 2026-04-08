@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BulkNutri — Calendário Mês 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --orange: #FF6A00;
+  --black: #0f0f0f;
+  --dark: #1a1a1a;
+  --card: #1e1e1e;
+  --border: #272727;
+  --white: #f0f0f0;
+  --muted: #777;
+  --edu: #4CAF50;
+  --social: #2196F3;
+  --bastidor: #FF6A00;
+  --oferta: #E91E63;
+  --stories: #9C27B0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(15,15,15,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 56px;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--orange);
+  letter-spacing: -1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--white);
+  background: var(--dark);
+}
+
+/* ── PAGE ── */
+.page {
+  min-height: 100vh;
+  padding: 80px 40px 60px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.page:nth-child(even) { background: #0c0c0c; }
+
+/* ── COVER ── */
+#capa {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0;
+  background: var(--black);
+  overflow: hidden;
+}
+
+#capa::before {
+  content: '';
+  position: absolute;
+  top: -120px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,106,0,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cover-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(4rem, 12vw, 8rem);
+  font-weight: 900;
+  color: var(--orange);
+  letter-spacing: -4px;
+  line-height: 1;
+  animation: fadeUp 0.8s ease both;
+}
+
+.cover-sub {
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 8px;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+
+.cover-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--orange);
+  margin: 28px auto;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+
+.cover-month {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--orange);
+  animation: fadeUp 0.8s 0.25s ease both;
+}
+
+.cover-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--white);
+  margin-top: 10px;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+.cover-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  color: var(--muted);
+  margin-top: 4px;
+  animation: fadeUp 0.8s 0.35s ease both;
+}
+
+/* Legend */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+  justify-content: center;
+  margin-top: 44px;
+  animation: fadeUp 0.8s 0.45s ease both;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Cadencia box */
+.cadencia-box {
+  margin-top: 48px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 28px;
+  max-width: 560px;
+  width: 100%;
+  background: var(--dark);
+  animation: fadeUp 0.8s 0.5s ease both;
+}
+
+.cadencia-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 16px;
+}
+
+.cadencia-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 1fr;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.78rem;
+}
+
+.cadencia-row:last-child { border-bottom: none; }
+.cadencia-row .day { font-weight: 600; color: var(--white); }
+.cadencia-row .fmt { color: var(--muted); }
+.cadencia-row .tipo { color: var(--orange); }
+
+/* ── WEEK PAGE ── */
+.week-page-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+.week-badge {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  border: 1px solid var(--orange);
+  padding: 5px 14px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.week-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.page-logo-small {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--orange);
+  letter-spacing: -0.5px;
+  opacity: 0.5;
+}
+
+/* Cards grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 780px) {
+  .cards-grid { grid-template-columns: 1fr; }
+  nav .nav-links { display: none; }
+  .page { padding: 80px 20px 48px; }
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: #333;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.card-accent {
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.card-day {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.card-tag {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.card-fmt {
+  font-size: 0.68rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+
+.card-caption {
+  font-size: 0.74rem;
+  color: #999;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.card-goal {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+.card-goal b {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+/* Tag variants */
+.tag-edu { background: rgba(76,175,80,0.12); color: #4CAF50; }
+.tag-social { background: rgba(33,150,243,0.12); color: #2196F3; }
+.tag-bastidor { background: rgba(255,106,0,0.12); color: var(--orange); }
+.tag-oferta { background: rgba(233,30,99,0.12); color: #E91E63; }
+.tag-stories { background: rgba(156,39,176,0.12); color: #9C27B0; }
+
+/* Stories bar */
+.stories-bar {
+  background: #140d1c;
+  border: 1px solid #2d1f3d;
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stories-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9C27B0;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.stories-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pill {
+  font-size: 0.65rem;
+  background: #2d1f3d;
+  color: #ce93d8;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ── RULES PAGE ── */
+#regras .page-section-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 6px;
+}
+
+#regras h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 700;
+  margin-bottom: 36px;
+}
+
+.rules-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 760px;
+}
+
+.rule-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 22px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.rule-card:hover {
+  border-color: #333;
+  transform: translateX(4px);
+}
+
+.rule-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--orange);
+}
+
+.rule-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.rule-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--white);
+  margin-bottom: 5px;
+}
+
+.rule-body {
+  font-size: 0.78rem;
+  color: #999;
+  line-height: 1.6;
+}
+
+/* ── PAGE SECTION HEADER ── */
+.page-section-header {
+  margin-bottom: 32px;
+}
+
+.page-section-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 4px;
+}
+
+.page-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  color: var(--white);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: none;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">bn.</div>
+  <ul class="nav-links">
+    <li><a href="#capa">Início</a></li>
+    <li><a href="#semana1">Semana 1</a></li>
+    <li><a href="#semana2">Semana 2</a></li>
+    <li><a href="#semana3">Semana 3</a></li>
+    <li><a href="#semana4">Semana 4</a></li>
+    <li><a href="#regras">Regras</a></li>
+  </ul>
+</nav>
+
+<!-- ── CAPA ── -->
+<section class="page" id="capa">
+  <div class="cover-logo">bulknutri.</div>
+  <div class="cover-sub">Suplementação</div>
+  <div class="cover-divider"></div>
+  <div class="cover-month">Mês 1 — Calendário de Conteúdo</div>
+  <div class="cover-title">Instagram</div>
+  <div class="cover-subtitle">Do Zero ao Primeiro Cliente</div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="dot" style="background:#4CAF50"></div>Educacional</div>
+    <div class="legend-item"><div class="dot" style="background:#2196F3"></div>Prova Social</div>
+    <div class="legend-item"><div class="dot" style="background:#FF6A00"></div>Bastidores</div>
+    <div class="legend-item"><div class="dot" style="background:#E91E63"></div>Oferta</div>
+    <div class="legend-item"><div class="dot" style="background:#9C27B0"></div>Stories Diários</div>
+  </div>
+
+  <div class="cadencia-box">
+    <div class="cadencia-title">Cadência Semanal</div>
+    <div class="cadencia-row">
+      <span class="day">Segunda</span>
+      <span class="fmt">Post / Carrossel</span>
+      <span class="tipo">Educacional</span>
+    </div>
+    <div class="cadencia-row">
+      <span class="day">Quarta</span>
+      <span class="fmt">Reels (15–30s)</span>
+      <span class="tipo">Bastidores ou Dica</span>
+    </div>
+    <div class="cadencia-row">
+      <span class="day">Sexta</span>
+      <span class="fmt">Post / Stories</span>
+      <span class="tipo">Oferta / Produto</span>
+    </div>
+    <div class="cadencia-row">
+      <span class="day">Diário</span>
+      <span class="fmt">3–5 Stories</span>
+      <span class="tipo">Mix leve</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEMANA 1 ── -->
+<section class="page" id="semana1">
+  <div class="week-page-header fade-in">
+    <span class="week-badge">Semana 1</span>
+    <div class="week-line"></div>
+    <span class="page-logo-small">bulknutri.</span>
+  </div>
+  <div class="page-section-header fade-in">
+    <div class="page-section-label">Objetivo da semana</div>
+    <div class="page-section-title">Apresentar a marca e criar os primeiros vínculos</div>
+  </div>
+  <div class="cards-grid">
+    <div class="card fade-in">
+      <div class="card-accent" style="background:#FF6A00"></div>
+      <div class="card-top">
+        <span class="card-day">Segunda</span>
+        <span class="card-tag tag-bastidor">Bastidores</span>
+      </div>
+      <div class="card-fmt">📸 Post estático / Carrossel</div>
+      <div class="card-title">Apresentação da BulkNutri</div>
+      <div class="card-caption">Quem somos, por que criamos isso e o que você vai encontrar aqui. Mostrem os 3 sócios e contem a história real e curta. Autenticidade converte.</div>
+      <div class="card-goal"><b>Objetivo:</b> Criar conexão, humanizar a marca</div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-accent" style="background:#4CAF50"></div>
+      <div class="card-top">
+        <span class="card-day">Quarta</span>
+        <span class="card-tag tag-edu">Educacional</span>
+      </div>
+      <div class="card-fmt">🎞️ Reels (15–30s)</div>
+      <div class="card-title">"Você realmente precisa de Whey?"</div>
+      <div class="card-caption">Responda de forma direta e honesta. Quem não precisa, quem precisa, alternativas. Conteúdo contraintuitivo gera salvamento e compartilhamento.</div>
+      <div class="card-goal"><b>Objetivo:</b> Alcance orgânico, primeiros seguidores</div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-accent" style="background:#E91E63"></div>
+      <div class="card-top">
+        <span class="card-day">Sexta</span>
+        <span class="card-tag tag-oferta">Oferta</span>
+      </div>
+      <div class="card-fmt">📸 Post estático</div>
+      <div class="card-title">Produto destaque da semana</div>
+      <div class="card-caption">Produto mais vendido. Preço + benefício principal + como pedir. Design limpo com logo da BulkNutri bem posicionada.</div>
+      <div class="card-goal"><b>Objetivo:</b> Primeira conversão via DM/WhatsApp</div>
+    </div>
+  </div>
+  <div class="stories-bar fade-in">
+    <span class="stories-label">Stories diários</span>
+    <div class="stories-pills">
+      <span class="pill">📦 Foto do estoque</span>
+      <span class="pill">❓ Enquete: "Você usa whey?"</span>
+      <span class="pill">🏋️ Qual seu objetivo?</span>
+      <span class="pill">💬 Caixa de perguntas</span>
+      <span class="pill">📲 Chama no WhatsApp</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEMANA 2 ── -->
+<section class="page" id="semana2">
+  <div class="week-page-header fade-in">
+    <span class="week-badge">Semana 2</span>
+    <div class="week-line"></div>
+    <span class="page-logo-small">bulknutri.</span>
+  </div>
+  <div class="page-section-header fade-in">
+    <div class="page-section-label">Objetivo da semana</div>
+    <div class="page-section-title">Engajar e mostrar movimento</div>
+  </div>
+  <div class="cards-grid">
+    <div class="card fade-in">
+      <div class="card-accent" style="background:#4CAF50"></div>
+      <div class="card-top">
+        <span class="card-day">Segunda</span>
+        <span class="card-tag tag-edu">Educacional</span>
+      </div>
+      <div class="card-fmt">🎞️ Carrossel (5–7 slides)</div>
+      <div class="card-title">"Creatina: 5 mitos que você ainda acredita"</div>
+      <div class="card-caption">Um mito por slide. Capa impactante com design da marca. Carrossel gera muito salvamento — ótimo para o algoritmo.</div>
+      <div class="card-goal"><b>Objetivo:</b> Salvamentos, crescimento de seguidores</div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-accent" style="background:#FF6A00"></div>
+      <div class="card-top">
+        <span class="card-day">Quarta</span>
+        <span class="card-tag tag-bastidor">Bastidores</span>
+      </div>
+      <div class="card-fmt">🎞️ Reels (15–30s)</div>
+      <div class="card-title">Separando pedidos — rotina real</div>
+      <div class="card-caption">Filmem a rotina de separar e embalar pedidos. Curto, autêntico, sem edição elaborada. "X pedidos saindo hoje 🚀" — gera credibilidade imediata.</div>
+      <div class="card-goal"><b>Objetivo:</b> Credibilidade, senso de movimento</div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-accent" style="background:#E91E63"></div>
+      <div class="card-top">
+        <span class="card-day">Sexta</span>
+        <span class="card-tag tag-oferta">Oferta</span>
+      </div>
+      <div class="card-fmt">📸 Post estático</div>
+      <div class="card-title">Combo da semana</div>
+      <div class="card-caption">Whey + Creatina com desconto especial. Cria percepção de valor e aumenta o ticket médio por pedido.</div>
+      <div class="card-goal"><b>Objetivo:</b> Aumentar ticket médio, gerar urgência</div>
+    </div>
+  </div>
+  <div class="stories-bar fade-in">
+    <span class="stories-label">Stories diários</span>
+    <div class="stories-pills">
+      <span class="pill">📊 Quiz de suplementos</span>
+      <span class="pill">⏱️ Contagem do combo</span>
+      <span class="pill">🙋 Me manda sua dúvida</span>
+      <span class="pill">✅ Respondendo dúvidas</span>
+      <span class="pill">🛒 Peça até sexta</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEMANA 3 ── -->
+<section class="page" id="semana3">
+  <div class="week-page-header fade-in">
+    <span class="week-badge">Semana 3</span>
+    <div class="week-line"></div>
+    <span class="page-logo-small">bulknutri.</span>
+  </div>
+  <div class="page-section-header fade-in">
+    <div class="page-section-label">Objetivo da semana</div>
+    <div class="page-section-title">Converter com prova social e direcionar pro WhatsApp</div>
+  </div>
+  <div class="cards-grid">
+    <div class="card fade-in">
+      <div class="card-accent" style="background:#2196F3"></div>
+      <div class="card-top">
+        <span class="card-day">Segunda</span>
+        <span class="card-tag tag-social">Prova Social</span>
+      </div>
+      <div class="card-fmt">📸 Post estático</div>
+      <div class="card-title">Primeiro depoimento de cliente</div>
+      <div class="card-caption">Print de conversa ou texto de cliente satisfeito. Design cuidado com foto ou fundo da marca. Se não tiver, use alguém próximo que comprou.</div>
+      <div class="card-goal"><b>Objetivo:</b> Confiança, conversão de novos clientes</div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-accent" style="background:#4CAF50"></div>
+      <div class="card-top">
+        <span class="card-day">Quarta</span>
+        <span class="card-tag tag-edu">Educacional</span>
+      </div>
+      <div class="card-fmt">🎞️ Reels (30s)</div>
+      <div class="card-title">"Qual o melhor horário para tomar whey?"</div>
+      <div class="card-caption">Pergunta que todo iniciante tem. Resposta direta em vídeo. CTA no final: "Quer saber qual whey se encaixa na sua rotina? Chama no WhatsApp."</div>
+      <div class="card-goal"><b>Objetivo:</b> Alcance, direcionar para WhatsApp</div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-accent" style="background:#E91E63"></div>
+      <div class="card-top">
+        <span class="card-day">Sexta</span>
+        <span class="card-tag tag-oferta">Oferta</span>
+      </div>
+      <div class="card-fmt">📸 Carrossel (3 slides)</div>
+      <div class="card-title">Linha completa disponível</div>
+      <div class="card-caption">Slide 1: capa chamativa. Slides 2–3: produtos com preço. Termina com benefício real — frete grátis acima de X ou entrega rápida.</div>
+      <div class="card-goal"><b>Objetivo:</b> Catálogo visual, facilitar pedido</div>
+    </div>
+  </div>
+  <div class="stories-bar fade-in">
+    <span class="stories-label">Stories diários</span>
+    <div class="stories-pills">
+      <span class="pill">🏆 Resultado de cliente</span>
+      <span class="pill">💡 Dica rápida do dia</span>
+      <span class="pill">📦 Chegada de estoque</span>
+      <span class="pill">🔥 Últimas unidades de X</span>
+      <span class="pill">📲 CTA direto pra compra</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEMANA 4 ── -->
+<section class="page" id="semana4">
+  <div class="week-page-header fade-in">
+    <span class="week-badge">Semana 4</span>
+    <div class="week-line"></div>
+    <span class="page-logo-small">bulknutri.</span>
+  </div>
+  <div class="page-section-header fade-in">
+    <div class="page-section-label">Objetivo da semana</div>
+    <div class="page-section-title">Fidelizar e plantar a semente da recorrência</div>
+  </div>
+  <div class="cards-grid">
+    <div class="card fade-in">
+      <div class="card-accent" style="background:#4CAF50"></div>
+      <div class="card-top">
+        <span class="card-day">Segunda</span>
+        <span class="card-tag tag-edu">Educacional</span>
+      </div>
+      <div class="card-fmt">🎞️ Carrossel (6 slides)</div>
+      <div class="card-title">"Guia de suplementos para iniciantes"</div>
+      <div class="card-caption">Conteúdo evergreen — esse post vai continuar sendo salvo por meses. Por onde começar, o que priorizar, o que evitar. Invistam no design aqui.</div>
+      <div class="card-goal"><b>Objetivo:</b> Salvamentos massivos, autoridade</div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-accent" style="background:#2196F3"></div>
+      <div class="card-top">
+        <span class="card-day">Quarta</span>
+        <span class="card-tag tag-social">Prova Social</span>
+      </div>
+      <div class="card-fmt">🎞️ Reels (20s)</div>
+      <div class="card-title">"Clientes de verdade, resultados de verdade"</div>
+      <div class="card-caption">Compilado rápido de prints de conversas ou depoimentos. Pode ser simples, com texto aparecendo na tela. Mostre que pessoas reais confiam.</div>
+      <div class="card-goal"><b>Objetivo:</b> Credibilidade, quebrar objeções</div>
+    </div>
+    <div class="card fade-in">
+      <div class="card-accent" style="background:#E91E63"></div>
+      <div class="card-top">
+        <span class="card-day">Sexta</span>
+        <span class="card-tag tag-oferta">Oferta</span>
+      </div>
+      <div class="card-fmt">📸 Post estático</div>
+      <div class="card-title">Oferta de fim de mês</div>
+      <div class="card-caption">"Última chance do mês" com desconto real. Urgência genuína — estoque limitado ou prazo. Nunca urgência falsa, isso destrói credibilidade.</div>
+      <div class="card-goal"><b>Objetivo:</b> Fechar vendas, criar hábito de compra</div>
+    </div>
+  </div>
+  <div class="stories-bar fade-in">
+    <span class="stories-label">Stories diários</span>
+    <div class="stories-pills">
+      <span class="pill">🔁 Peça todo mês, economize</span>
+      <span class="pill">📊 Balanço do mês</span>
+      <span class="pill">🎁 Indique e ganhe desconto</span>
+      <span class="pill">❓ O que querem ver em Fev?</span>
+      <span class="pill">🙏 Agradecimento real</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── REGRAS ── -->
+<section class="page" id="regras">
+  <div class="week-page-header fade-in">
+    <span class="week-badge">Regras de Ouro</span>
+    <div class="week-line"></div>
+    <span class="page-logo-small">bulknutri.</span>
+  </div>
+  <div class="page-section-header fade-in">
+    <div class="page-section-label">Execução</div>
+    <h2 class="page-section-title" style="font-family:'Playfair Display',serif; font-size:clamp(1.4rem,3vw,2rem)">Para Executar o Calendário</h2>
+  </div>
+  <div class="rules-grid">
+    <div class="rule-card fade-in">
+      <div class="rule-icon">🎨</div>
+      <div>
+        <div class="rule-title">Mantenha o padrão visual sempre.</div>
+        <div class="rule-body">Preto + laranja + tipografia consistente em todos os posts. Quem ver 3 posts seus precisa reconhecer a BulkNutri sem ler o nome.</div>
+      </div>
+    </div>
+    <div class="rule-card fade-in">
+      <div class="rule-icon">📱</div>
+      <div>
+        <div class="rule-title">Stories todos os dias, sem exceção.</div>
+        <div class="rule-body">Mesmo que seja só uma foto do celular. O algoritmo prioriza contas ativas. 3 Stories simples valem mais que 1 post elaborado que some por 3 dias.</div>
+      </div>
+    </div>
+    <div class="rule-card fade-in">
+      <div class="rule-icon">💬</div>
+      <div>
+        <div class="rule-title">Responda TUDO nos primeiros 30 minutos.</div>
+        <div class="rule-body">Comentários e DMs respondidos rápido aumentam o alcance do post. O Instagram entende que seu conteúdo gera conversa.</div>
+      </div>
+    </div>
+    <div class="rule-card fade-in">
+      <div class="rule-icon">📍</div>
+      <div>
+        <div class="rule-title">Marque localização em todos os posts.</div>
+        <div class="rule-body">Belo Horizonte, Minas Gerais ou bairros. Atrai compradores locais que preferem entrega rápida e podem virar clientes fixos.</div>
+      </div>
+    </div>
+    <div class="rule-card fade-in">
+      <div class="rule-icon">🔁</div>
+      <div>
+        <div class="rule-title">Divida as tarefas entre os 3 sócios.</div>
+        <div class="rule-body">Um posta e cria, um responde DMs e comentários, um cuida de Stories de bastidor. Rotação semanal evita sobrecarga com a faculdade.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
