@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BulkNutri — Briefing Reels</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --orange: #FF6A00;
+  --black:  #0f0f0f;
+  --dark:   #161616;
+  --card:   #1c1c1c;
+  --border: #272727;
+  --white:  #f0f0f0;
+  --muted:  #666;
+  --dim:    #999;
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  padding-bottom: 80px;
+}
+
+/* TOPBAR */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 36px;
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(15,15,15,0.96);
+  backdrop-filter: blur(12px);
+}
+.topbar-logo { font-family:'Playfair Display',serif; font-weight:900; font-size:1.2rem; color:var(--orange); letter-spacing:-1px; }
+.topbar-tag  { font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--muted); border:1px solid var(--border); padding:4px 12px; border-radius:20px; }
+
+/* HERO */
+.hero {
+  padding: 60px 24px 48px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content:''; position:absolute; top:-60px; left:50%; transform:translateX(-50%);
+  width:520px; height:380px;
+  background: radial-gradient(circle, rgba(255,106,0,0.07) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-eyebrow { font-size:0.62rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--orange); margin-bottom:14px; }
+.hero-title {
+  font-family:'Playfair Display',serif; font-size:clamp(1.8rem,5vw,3rem); font-weight:900; line-height:1.15; margin-bottom:10px;
+}
+.hero-title em { color:var(--orange); font-style:italic; }
+.hero-sub { font-size:0.82rem; color:var(--dim); max-width:480px; margin:0 auto 28px; line-height:1.8; }
+.pills { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+.pill { font-size:0.65rem; background:rgba(255,106,0,0.1); color:var(--orange); border:1px solid rgba(255,106,0,0.25); padding:4px 13px; border-radius:20px; }
+
+/* LAYOUT */
+.wrap { max-width:980px; margin:0 auto; padding:0 24px; }
+
+/* SECTION LABEL */
+.sec-label {
+  font-size:0.58rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--orange);
+  display:flex; align-items:center; gap:12px; margin-bottom:20px; margin-top:48px;
+}
+.sec-label::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* OVERVIEW GRID */
+.overview-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:0; }
+.ov-card {
+  background:var(--card); border:1px solid var(--border); border-radius:8px;
+  padding:16px 18px; position:relative; overflow:hidden;
+}
+.ov-card::before { content:''; position:absolute; top:0;left:0; width:100%; height:2px; background:var(--orange); }
+.ov-label { font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+.ov-value { font-size:0.88rem; font-weight:600; color:var(--white); line-height:1.3; }
+.ov-value.orange { color:var(--orange); }
+
+/* HOOK SECTION */
+.hook-box {
+  background:var(--card); border:1px solid var(--border); border-radius:10px;
+  padding:28px; position:relative; overflow:hidden;
+}
+.hook-box::before { content:''; position:absolute; top:0;left:0; width:3px; height:100%; background:var(--orange); }
+.hook-title { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:4px; padding-left:12px; }
+.hook-why { font-size:0.72rem; color:var(--dim); margin-bottom:18px; padding-left:12px; }
+.hook-options { display:flex; flex-direction:column; gap:10px; padding-left:12px; }
+.hook-item {
+  background:#141414; border:1px solid var(--border); border-radius:6px;
+  padding:12px 15px; display:flex; align-items:flex-start; gap:12px;
+}
+.hook-item.winner { border-color:rgba(255,106,0,0.4); background:rgba(255,106,0,0.04); }
+.hook-rank { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:900; color:rgba(255,106,0,0.2); flex-shrink:0; line-height:1; }
+.hook-item.winner .hook-rank { color:var(--orange); }
+.hook-text-wrap {}
+.hook-text { font-size:0.82rem; font-weight:600; color:var(--white); margin-bottom:3px; }
+.hook-note { font-size:0.7rem; color:var(--dim); line-height:1.5; }
+.winner-tag { font-size:0.55rem; background:var(--orange); color:#fff; padding:2px 8px; border-radius:20px; font-weight:600; letter-spacing:0.1em; display:inline-block; margin-left:8px; vertical-align:middle; }
+
+/* ROTEIRO */
+.roteiro { display:flex; flex-direction:column; gap:0; }
+.cena {
+  display:grid; grid-template-columns:52px 1fr;
+  gap:0; position:relative;
+}
+.cena-line {
+  display:flex; flex-direction:column; align-items:center; padding-top:4px;
+}
+.cena-dot {
+  width:10px; height:10px; border-radius:50%; background:var(--border); border:2px solid var(--border);
+  flex-shrink:0; z-index:1;
+}
+.cena-dot.active { background:var(--orange); border-color:var(--orange); }
+.cena-connector { flex:1; width:1px; background:var(--border); margin-top:2px; }
+.cena:last-child .cena-connector { display:none; }
+
+.cena-body {
+  background:var(--card); border:1px solid var(--border); border-radius:8px;
+  padding:16px 18px; margin-bottom:10px; margin-left:0;
+}
+.cena-header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.cena-time { font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--orange); background:rgba(255,106,0,0.1); padding:2px 8px; border-radius:20px; white-space:nowrap; }
+.cena-tag { font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+.cena-title { font-weight:600; font-size:0.88rem; color:var(--white); margin-bottom:5px; }
+.cena-desc { font-size:0.76rem; color:var(--dim); line-height:1.7; }
+.cena-script {
+  margin-top:10px; background:#111; border:1px solid var(--border); border-radius:5px;
+  padding:10px 13px;
+}
+.cena-script-label { font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:5px; }
+.cena-script-text { font-size:0.78rem; color:#ccc; line-height:1.7; font-style:italic; }
+.cena-script-text strong { color:var(--orange); font-style:normal; }
+.cena-tip { margin-top:8px; font-size:0.7rem; color:var(--dim); display:flex; gap:6px; align-items:flex-start; }
+.cena-tip-icon { flex-shrink:0; }
+
+/* VISUAL DIR */
+.vis-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
+.vis-card {
+  background:var(--card); border:1px solid var(--border); border-radius:8px; padding:18px;
+  position:relative; overflow:hidden;
+}
+.vis-card::before { content:''; position:absolute; top:0;left:0; width:3px; height:100%; background:var(--orange); }
+.vis-icon { font-size:1.3rem; margin-bottom:8px; }
+.vis-title { font-size:0.82rem; font-weight:600; color:var(--white); margin-bottom:5px; }
+.vis-body { font-size:0.73rem; color:var(--dim); line-height:1.6; }
+
+/* LEGENDA */
+.legenda-box {
+  background:var(--card); border:1px solid var(--border); border-radius:10px;
+  padding:26px 28px; position:relative; overflow:hidden;
+}
+.legenda-box::before { content:''; position:absolute; top:0;left:0; width:3px; height:100%; background:var(--orange); }
+.leg-title { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:14px; padding-left:12px; }
+.leg-text { font-size:0.8rem; color:var(--dim); line-height:2; padding-left:12px; white-space:pre-line; }
+.leg-text strong { color:var(--white); font-weight:600; }
+.leg-text em { color:var(--orange); font-style:normal; }
+
+/* HASHTAGS */
+.hash-box {
+  background:#111; border:1px solid var(--border); border-radius:8px;
+  padding:18px 20px; margin-top:14px;
+}
+.hash-label { font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+.hash-tags { display:flex; flex-wrap:wrap; gap:7px; }
+.hash-tag { font-size:0.68rem; color:var(--orange); background:rgba(255,106,0,0.07); border:1px solid rgba(255,106,0,0.15); padding:3px 10px; border-radius:20px; }
+
+/* CHECKLIST */
+.checklist { display:flex; flex-direction:column; gap:8px; }
+.check-item {
+  background:var(--card); border:1px solid var(--border); border-radius:6px;
+  padding:12px 16px; display:flex; align-items:center; gap:12px; font-size:0.78rem; color:var(--dim);
+}
+.check-box {
+  width:16px; height:16px; border:1.5px solid var(--border); border-radius:3px;
+  flex-shrink:0;
+}
+
+@media(max-width:600px) {
+  .topbar { padding:14px 20px; }
+  .wrap { padding:0 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">bulknutri.</div>
+  <div class="topbar-tag">Briefing — Reels Viral</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Reels · Quarta-feira · Semana 1</div>
+  <h1 class="hero-title">"Você realmente<br><em>precisa de Whey?"</em></h1>
+  <p class="hero-sub">Briefing completo para gravar, editar e publicar. Objetivo: alcance orgânico máximo e primeiros seguidores reais.</p>
+  <div class="pills">
+    <span class="pill">15–30 segundos</span>
+    <span class="pill">Vertical 9:16</span>
+    <span class="pill">Sem edição elaborada</span>
+    <span class="pill">Postar 18h–20h</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- OVERVIEW -->
+  <div class="sec-label">Visão geral</div>
+  <div class="overview-grid">
+    <div class="ov-card">
+      <div class="ov-label">Formato</div>
+      <div class="ov-value">Reels falado direto pra câmera</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-label">Duração ideal</div>
+      <div class="ov-value orange">20–25 segundos</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-label">Tom</div>
+      <div class="ov-value">Direto, honesto, sem enrolação</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-label">Cenário</div>
+      <div class="ov-value">Academia ou em casa com suplementos visíveis</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-label">Edição</div>
+      <div class="ov-value">Cortes secos, texto na tela, sem efeitos</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-label">Por que viraliza</div>
+      <div class="ov-value orange">Responde dúvida real + vai contra o óbvio</div>
+    </div>
+  </div>
+
+  <!-- HOOK -->
+  <div class="sec-label">Escolha do hook — os primeiros 3 segundos</div>
+  <div class="hook-box">
+    <div class="hook-title">O hook é tudo.</div>
+    <div class="hook-why">Se os primeiros 3 segundos não prenderem, o algoritmo não distribui. Escolha um dos hooks abaixo — o vencedor é o mais recomendado.</div>
+    <div class="hook-options">
+
+      <div class="hook-item winner">
+        <div class="hook-rank">1</div>
+        <div class="hook-text-wrap">
+          <div class="hook-text">"Whey não é obrigatório. Eu falei." <span class="winner-tag">RECOMENDADO</span></div>
+          <div class="hook-note">Afirmação polêmica que contradiz o senso comum. Quem treina vai querer ouvir o resto — seja pra concordar ou discordar. Ambos geram engajamento.</div>
+        </div>
+      </div>
+
+      <div class="hook-item">
+        <div class="hook-rank">2</div>
+        <div class="hook-text-wrap">
+          <div class="hook-text">"Para tudo. Antes de comprar whey, ouve isso."</div>
+          <div class="hook-note">Cria urgência e sensação de que a pessoa está prestes a cometer um erro. Funciona muito bem com quem está começando.</div>
+        </div>
+      </div>
+
+      <div class="hook-item">
+        <div class="hook-rank">3</div>
+        <div class="hook-text-wrap">
+          <div class="hook-text">"A academia te vendeu uma mentira sobre whey."</div>
+          <div class="hook-note">Mais agressivo, gera mais polêmica e comentários. Risco maior, recompensa maior. Use se quiser ir pesado no alcance.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ROTEIRO -->
+  <div class="sec-label">Roteiro cena a cena</div>
+  <div class="roteiro">
+
+    <div class="cena">
+      <div class="cena-line"><div class="cena-dot active"></div><div class="cena-connector"></div></div>
+      <div class="cena-body">
+        <div class="cena-header">
+          <span class="cena-time">0s – 3s</span>
+          <span class="cena-tag">Hook visual + verbal</span>
+        </div>
+        <div class="cena-title">Parar o dedo na tela</div>
+        <div class="cena-desc">Câmera já ligada, você já falando. Sem introdução, sem "oi gente". A frase do hook sai nos primeiros 2 segundos enquanto aparece o texto na tela.</div>
+        <div class="cena-script">
+          <div class="cena-script-label">Fala</div>
+          <div class="cena-script-text"><strong>"Whey não é obrigatório. Eu falei."</strong></div>
+        </div>
+        <div class="cena-tip"><span class="cena-tip-icon">💡</span><span>Texto grande na tela repetindo a frase. Expressão séria, olho na câmera. Pausa de meio segundo depois de falar.</span></div>
+      </div>
+    </div>
+
+    <div class="cena">
+      <div class="cena-line"><div class="cena-dot active"></div><div class="cena-connector"></div></div>
+      <div class="cena-body">
+        <div class="cena-header">
+          <span class="cena-time">3s – 10s</span>
+          <span class="cena-tag">Desenvolvimento — o "porquê"</span>
+        </div>
+        <div class="cena-title">Explicar sem enrolar</div>
+        <div class="cena-desc">Aqui vai a carne do conteúdo. Dois ou três argumentos rápidos, um por corte. Cada corte seco mantém o ritmo acelerado que o algoritmo ama.</div>
+        <div class="cena-script">
+          <div class="cena-script-label">Fala</div>
+          <div class="cena-script-text">
+            <strong>"Se você bate sua proteína na dieta — frango, ovo, carne —<br>whey é só conveniência. Não milagre."</strong><br><br>
+            [corte seco]<br><br>
+            <strong>"Whey é proteína em pó. Nada mais, nada menos.<br>Você pode viver sem ele."</strong>
+          </div>
+        </div>
+        <div class="cena-tip"><span class="cena-tip-icon">💡</span><span>Cada argumento é um corte diferente. Pode mudar o ângulo da câmera em cada corte — isso cria dinamismo sem precisar de edição complexa.</span></div>
+      </div>
+    </div>
+
+    <div class="cena">
+      <div class="cena-line"><div class="cena-dot active"></div><div class="cena-connector"></div></div>
+      <div class="cena-body">
+        <div class="cena-header">
+          <span class="cena-time">10s – 18s</span>
+          <span class="cena-tag">A virada — quem realmente precisa</span>
+        </div>
+        <div class="cena-title">O "mas..." que salva o produto</div>
+        <div class="cena-desc">Essa é a parte mais inteligente do roteiro. Depois de dizer que whey não é obrigatório, você apresenta quem realmente se beneficia. Isso gera credibilidade — você não está só tentando vender.</div>
+        <div class="cena-script">
+          <div class="cena-script-label">Fala</div>
+          <div class="cena-script-text">
+            <strong>"Mas... se você treina cedo, não tem tempo de comer direito<br>ou não consegue bater proteína no dia —<br>whey resolve isso em 30 segundos."</strong><br><br>
+            [corte]<br><br>
+            <strong>"Pra esse perfil, vale muito a pena."</strong>
+          </div>
+        </div>
+        <div class="cena-tip"><span class="cena-tip-icon">💡</span><span>Tom muda aqui: mais leve, quase consultivo. Segura um pote de whey na mão enquanto fala — visual reforça o produto sem precisar citar marca.</span></div>
+      </div>
+    </div>
+
+    <div class="cena">
+      <div class="cena-line"><div class="cena-dot active"></div><div class="cena-connector"></div></div>
+      <div class="cena-body">
+        <div class="cena-header">
+          <span class="cena-time">18s – 25s</span>
+          <span class="cena-tag">CTA — fechar com engajamento</span>
+        </div>
+        <div class="cena-title">Chamar pra conversa, não pra venda</div>
+        <div class="cena-desc">Não fale em comprar aqui. O objetivo é comentário e salvamento. Faça uma pergunta que o público vai querer responder — isso explode o alcance.</div>
+        <div class="cena-script">
+          <div class="cena-script-label">Fala</div>
+          <div class="cena-script-text">
+            <strong>"Você usa whey? Me conta nos comentários —<br>e se tiver dúvida se vale ou não pra você,<br>chama aqui no direct que eu te ajudo."</strong>
+          </div>
+        </div>
+        <div class="cena-tip"><span class="cena-tip-icon">💡</span><span>A pergunta "você usa whey?" é simples de responder — um sim ou não. Quanto mais fácil responder, mais comentários. Mais comentários = mais alcance.</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DIREÇÃO VISUAL -->
+  <div class="sec-label">Direção visual e de edição</div>
+  <div class="vis-grid">
+    <div class="vis-card">
+      <div class="vis-icon">🎥</div>
+      <div class="vis-title">Câmera e enquadramento</div>
+      <div class="vis-body">Vertical 9:16. Rosto do meio pra cima, câmera na altura dos olhos. Fundo limpo ou academia desfocada. Iluminação natural de frente — janela funciona perfeitamente.</div>
+    </div>
+    <div class="vis-card">
+      <div class="vis-icon">✂️</div>
+      <div class="vis-title">Cortes e ritmo</div>
+      <div class="vis-body">Cortes secos a cada frase. Sem transição, sem efeito. O ritmo acelerado dos cortes é o que mantém o watch time alto — métrica mais importante pro algoritmo.</div>
+    </div>
+    <div class="vis-card">
+      <div class="vis-icon">🔤</div>
+      <div class="vis-title">Texto na tela</div>
+      <div class="vis-body">Palavras-chave de cada frase aparecem em destaque. Fonte grande, branca ou laranja (#FF6A00). Muita gente assiste sem som — o texto garante que a mensagem chegue.</div>
+    </div>
+    <div class="vis-card">
+      <div class="vis-icon">🎵</div>
+      <div class="vis-title">Música de fundo</div>
+      <div class="vis-body">Som ambiente baixo ou trilha instrumental leve. Não pode competir com a voz. No CapCut, volume da música em 10–15%. Escolha uma trending do momento — ajuda na distribuição.</div>
+    </div>
+    <div class="vis-card">
+      <div class="vis-icon">🧴</div>
+      <div class="vis-title">Prop no vídeo</div>
+      <div class="vis-body">Segure um pote de whey na cena da virada. Não precisa mostrar a marca — o objeto já conecta visualmente o conteúdo ao produto. Natural, não forçado.</div>
+    </div>
+    <div class="vis-card">
+      <div class="vis-icon">🏷️</div>
+      <div class="vis-title">Identidade BulkNutri</div>
+      <div class="vis-body">Logo pequena no canto superior durante todo o vídeo. Cor laranja nos textos em destaque. Consistência visual desde o primeiro Reels constrói reconhecimento de marca.</div>
+    </div>
+  </div>
+
+  <!-- LEGENDA -->
+  <div class="sec-label">Legenda + hashtags</div>
+  <div class="legenda-box">
+    <div class="leg-title">Cole essa legenda</div>
+    <div class="leg-text">Whey não é obrigatório — e eu vou te provar.
+
+Se você bate sua proteína na dieta, <strong>whey é só conveniência.</strong> Não tem nada de mágico nisso.
+
+Agora, se você treina cedo, tem rotina corrida ou não consegue bater proteína no dia — aí sim, <em>vale cada centavo.</em>
+
+Você se encaixa em qual dos dois? 👇</div>
+  </div>
+
+  <div class="hash-box">
+    <div class="hash-label">Hashtags recomendadas</div>
+    <div class="hash-tags">
+      <span class="hash-tag">#suplementacao</span>
+      <span class="hash-tag">#wheyprotein</span>
+      <span class="hash-tag">#dicasdetreino</span>
+      <span class="hash-tag">#musculacao</span>
+      <span class="hash-tag">#nutriçao</span>
+      <span class="hash-tag">#academia</span>
+      <span class="hash-tag">#suplementos</span>
+      <span class="hash-tag">#fitness</span>
+      <span class="hash-tag">#belohorizonte</span>
+      <span class="hash-tag">#bulknutri</span>
+    </div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="sec-label">Checklist antes de publicar</div>
+  <div class="checklist">
+    <div class="check-item"><div class="check-box"></div>Vídeo entre 20 e 30 segundos</div>
+    <div class="check-item"><div class="check-box"></div>Hook falado nos primeiros 2 segundos</div>
+    <div class="check-item"><div class="check-box"></div>Texto na tela em todas as cenas principais</div>
+    <div class="check-item"><div class="check-box"></div>Logo da BulkNutri visível no canto</div>
+    <div class="check-item"><div class="check-box"></div>Pergunta no final pra gerar comentários</div>
+    <div class="check-item"><div class="check-box"></div>Legenda colada com a pergunta repetida</div>
+    <div class="check-item"><div class="check-box"></div>Hashtags adicionadas (máx. 10)</div>
+    <div class="check-item"><div class="check-box"></div>Localização marcada: Belo Horizonte</div>
+    <div class="check-item"><div class="check-box"></div>Publicando entre 18h e 20h</div>
+    <div class="check-item"><div class="check-box"></div>Stories avisando que o Reels saiu</div>
+  </div>
+
+</div>
+</body>
+</html>
