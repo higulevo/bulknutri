@@ -32,5 +32,5 @@ app.use('/api/categories', categoryRoutes);
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
