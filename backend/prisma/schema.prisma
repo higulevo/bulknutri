@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -35,8 +35,8 @@ model Product {
   costPrice   Float     @default(0)
   salePrice   Float     @default(0)
   hasVariants Boolean   @default(true)
-  stock       Int       @default(0)   // usado só quando hasVariants=false
-  minStock    Int       @default(5)   // usado só quando hasVariants=false
+  stock       Int       @default(0)
+  minStock    Int       @default(5)
   categoryId  Int?
   active      Boolean   @default(true)
   createdAt   DateTime  @default(now())
@@ -60,9 +60,9 @@ model Variant {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
-  movements  Movement[]
-  saleItems  SaleItem[]
+  product   Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  movements Movement[]
+  saleItems SaleItem[]
 }
 
 model Movement {
@@ -70,7 +70,7 @@ model Movement {
   variantId Int?
   productId Int?
   userId    Int
-  type      String   // ENTRADA | SAIDA | AJUSTE | VENDA | ESTORNO
+  type      String
   quantity  Int
   note      String?
   saleId    Int?
