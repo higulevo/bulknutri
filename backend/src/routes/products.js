@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import prisma from '../utils/prisma.js';
 import { authMiddleware } from '../middleware/auth.js';
-import { upload } from '../utils/cloudinary.js';
+import { upload, uploadToCloudinary } from '../utils/cloudinary.js';
 
 const router = Router();
 router.use(authMiddleware);
@@ -28,12 +28,16 @@ router.get('/', async (req, res) => {
 router.post('/', upload.single('image'), async (req, res) => {
   try {
     const { name, brand, description, costPrice, salePrice, categoryId, hasVariants, stock, minStock } = req.body;
+    let imageUrl = null;
+    if (req.file) {
+      imageUrl = await uploadToCloudinary(req.file.buffer, req.file.originalname);
+    }
     const product = await prisma.product.create({
       data: {
         name,
         brand:       brand       || null,
         description: description || null,
-        image:       req.file    ? req.file.path : null,
+        image:       imageUrl,
         costPrice:   parseFloat(costPrice)  || 0,
         salePrice:   parseFloat(salePrice)  || 0,
         hasVariants: hasVariants === 'true'  || hasVariants === true,
@@ -63,7 +67,9 @@ router.put('/:id', upload.single('image'), async (req, res) => {
       minStock:    parseInt(minStock)     || 5,
       categoryId:  categoryId ? Number(categoryId) : null,
     };
-    if (req.file) data.image = req.file.path;
+    if (req.file) {
+      data.image = await uploadToCloudinary(req.file.buffer, req.file.originalname);
+    }
     const product = await prisma.product.update({
       where: { id: Number(req.params.id) },
       data,
