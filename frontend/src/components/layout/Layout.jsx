@@ -125,9 +125,9 @@ export default function Layout() {
 
       {/* Sidebar Desktop */}
       <aside style={{
-        display: 'none', width: 220, flexDirection: 'column',
+        width: 220, flexDirection: 'column',
         background: '#0A0A0A', borderRight: '1px solid #1A1A1A', flexShrink: 0,
-      }} className="lg:flex lg:flex-col">
+      }} className="hidden lg:flex lg:flex-col">
         {/* Logo */}
         <div style={{ padding: '20px 16px 16px', borderBottom: '1px solid #1A1A1A' }}>
           <Logo size="lg" />
